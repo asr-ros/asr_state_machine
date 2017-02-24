@@ -1,0 +1,53 @@
+container_status : '/scene_exploration_state_machine/smach/container_status'
+container_init : '/scene_exploration_state_machine/smach/container_init'
+container_structure : '/scene_exploration_state_machine/smach/container_structure'
+
+tf : 'tf'
+tf_static : '/tf_static'
+map : 'map'
+move_base_footprint_stamped : '/move_base/global_costmap/obstacle_layer_footprint/footprint_stamped'
+scan : '/scan'
+odom : '/odom'
+move_base_plan : '/move_base/NavfnROS/plan'
+move_base_local_plan : '/move_base/DWAPlannerROS/local_plan'
+move_base_goal : '/move_base_simple/goal'
+move_base_global_costmap : '/move_base/global_costmap/costmap'
+move_base_local_costmap : '/move_base/local_costmap/costmap'
+particlecloud : '/particlecloud'
+waypoints : '/waypoints'
+threeD_models_topic : '/room_model'
+
+#mode : 1 for direct search only, 2 for indirect search only, 3 for object search, 4 for random search, 5 for cropbox search, 6 for cropbox record, 7 for grid init record search
+mode : 2
+#Use FakeMoveBase if robot should be set on target pos, instead of moving to it. This can be useful in simulation for random or cropbox search, to save time
+UseFakeMoveBase : false
+#search for all objects or only intermediate objects in direct search
+SearchAllobject : true
+#Stop when first object is found or all object, only for direct search as stand alone
+StopAtfirst : false
+
+#If you want to use smach viewer you can set this to true. However, it will cost a lot of CPU usage, despite if smach viewer runs
+enableSmachViewer : true
+
+#The percentage to determine when too many normals are deactivated during SET_NBV_POINT_CLOUD. -> Abort if numberOfDeletedNormals / numberOfActiveNormals <= percentageTooManyDeactivatedNormals
+percentageTooManyDeactivatedNormals: 0.8
+
+#The minimum utility value of a nbv estimate that is required to consider moving to it. If utility (not rating!) is below, return no_nbv_found.
+min_utility_for_moving : 0.1
+
+#Filter viewports of NBV which are approx equale to already visited viewports
+filter_viewports : true
+
+#If false robot will not move to approx equale robot state (position, orientation, tilt) again (only in random search!)
+AllowSameViewInRandomSearch : false
+
+#The placeholder ObjectType/Identifier in the point_cloud (for cropbox search/record)
+PlaceholderObjectTypeInCropboxSearch : 'CropboxPlaceholder'
+PlaceholderIdentifierInCropboxSearch : '0'
+#The height of the room. Will be used in cropbox search/record for generating the point cloud (2.25 is height of 'Regal' + offset)
+RoomHeight : 2.25
+
+# used to save pointclouds in the log folder so they can be debugged in nbv later
+SavePointClouds : true
+# if pointcloud hypothesis should be kept when they are removed
+recoverLostHypothesis: true

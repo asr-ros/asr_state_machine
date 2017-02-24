@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<package>
+  <name>scene_exploration</name>
+  <version>1.0.0</version>
+  <description>The state machines in this package are run on MILD to perform direct/indirect search</description>
+  <author>Allgeyer Tobias, Aumann Florian, Borella Jocelyn, Hutmacher Robin, Karrenbauer Oliver, Marek Felix, Meißner Pascal, Trautmann Jeremias, Wittenbeck Valerij</author>
+  <maintainer email="asr-ros@lists.kit.edu">Meißner Pascal</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>roslib</build_depend>
+  <build_depend>actionlib</build_depend>
+  <build_depend>actionlib_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>visualization_msgs</build_depend>
+  <build_depend>asr_msgs</build_depend>
+  <build_depend>recognition_for_grasping</build_depend>
+  <build_depend>aruco_marker_recognition</build_depend>
+  <build_depend>descriptor_surface_based_recognition</build_depend>
+  <build_depend>fake_object_recognition</build_depend>
+  <build_depend>world_model</build_depend>
+  <build_depend>recognizer_prediction_ism</build_depend>
+  <build_depend>next_best_view</build_depend>
+  <build_depend>asr_direct_search_manager</build_depend>
+  <build_depend>move_base</build_depend>
+  <build_depend>asr_flir_ptu_controller</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>tf2_ros</build_depend>
+  <build_depend>asr_visualization_server</build_depend>
+
+  <run_depend>rospy</run_depend>
+  <run_depend>roslib</run_depend>
+  <run_depend>actionlib</run_depend>
+  <run_depend>actionlib_msgs</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>visualization_msgs</run_depend>
+  <run_depend>asr_msgs</run_depend>
+  <run_depend>recognition_for_grasping</run_depend>
+  <run_depend>aruco_marker_recognition</run_depend>
+  <run_depend>descriptor_surface_based_recognition</run_depend>
+  <run_depend>fake_object_recognition</run_depend>
+  <run_depend>world_model</run_depend>
+  <run_depend>recognizer_prediction_ism</run_depend>
+  <run_depend>next_best_view</run_depend>
+  <run_depend>asr_direct_search_manager</run_depend>
+  <run_depend>move_base</run_depend>
+  <run_depend>asr_flir_ptu_controller</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>tf2_ros</run_depend>
+  <run_depend>asr_visualization_server</run_depend>
+  <run_depend>asr_robot_model_services</run_depend>
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>

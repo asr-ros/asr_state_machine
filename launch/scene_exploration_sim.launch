@@ -1,0 +1,13 @@
+<launch>
+    <env name="ROSCONSOLE_CONFIG_FILE" value="$(find scene_exploration)/log/rosconsole.config" />
+    <node name="scene_exploration_sm" pkg="scene_exploration" type="SceneExploration.py" output="screen">
+        <!-- XXX will be replaced with /rp_ism_node/dbfilename -->
+        <param name="IOPath" value="$(find scene_exploration)/rsc/IntermediateObject_XXX.xml"/>
+        <!-- XXX will be replaced with /rp_ism_node/dbfilename -->
+        <param name="CompletePatternsPath" value="$(find scene_exploration)/rsc/CompletePatterns_XXX.py"/>
+        <param name="CropBoxRecordingPath" value="$(find asr_direct_search_manager)/rsc/cropBoxWholeRoomRecording.xml"/>
+        <param name="initializedGridFilePath" value="$(find asr_direct_search_manager)/rsc/initializedGrid.xml"/>
+	<rosparam command="load" file="$(find scene_exploration)/launch/params.yaml" />
+        <param name="use_sensors" value="False" />
+    </node>
+</launch>
