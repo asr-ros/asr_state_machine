@@ -134,7 +134,7 @@ class GetRobotState(smach.State):
         angles
         """
 
-        sub_ptu = rospy.Subscriber('/ptu_driver/state', JointState, self.ptu_callback)
+        sub_ptu = rospy.Subscriber('/asr_flir_ptu_driver/state', JointState, self.ptu_callback)
 
         future = time() + 2
         while not self.ptu and time() < future:

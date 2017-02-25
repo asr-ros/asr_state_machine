@@ -26,7 +26,7 @@ import states.state_acquisition as state_acquisition
 
 from geometry_msgs.msg import Pose, Point, Quaternion
 from nav_msgs.msg import OccupancyGrid
-from ptu_driver.srv import Range
+from asr_flir_ptu_driver.srv import Range
 from asr_robot_model_services.srv import IsPositionAllowed
 
 from evaluation_decorators import *
@@ -81,8 +81,8 @@ class GenerateRandomPose(smach.State):
 
     def initTiltRange(self):
         try:
-            rospy.wait_for_service('/ptu_driver/get_range')
-            ptuRange = rospy.ServiceProxy('/ptu_driver/get_range', Range)()
+            rospy.wait_for_service('/asr_flir_ptu_driver/get_range')
+            ptuRange = rospy.ServiceProxy('/asr_flir_ptu_driver/get_range', Range)()
             self.tiltMin = ptuRange.tilt_min_angle
             self.tiltMax = ptuRange.tilt_max_angle
             rospy.loginfo('Random tilts are generated between tiltMin: ' + str(self.tiltMin) + ' and tiltMax: ' + str(self.tiltMax))
