@@ -25,7 +25,7 @@ import time
 import math
 import timeit
 
-from ptu_controller.msg import PTUMovementGoal, PTUMovementAction
+from asr_flir_ptu_controller.msg import PTUMovementGoal, PTUMovementAction
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from geometry_msgs.msg import (Pose, PoseWithCovariance, PoseWithCovarianceStamped)
 from asr_robot_model_services.srv import CalculateCameraPoseCorrection
