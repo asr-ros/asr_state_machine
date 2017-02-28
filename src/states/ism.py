@@ -26,8 +26,8 @@ import imp
 from recognizer_prediction_ism.srv import FindScenes, GetPointCloud
 from asr_msgs.msg import AsrObject, AsrTypeAndId
 from asr_msgs.msg import AsrAttributedPointCloud, AsrAttributedPoint
-from world_model.msg import CompletePattern
-from world_model.srv import GetFoundObjectList, GetMissingObjectList, GetCompletePatterns
+from asr_world_model.msg import CompletePattern
+from asr_world_model.srv import GetFoundObjectList, GetMissingObjectList, GetCompletePatterns
 
 from evaluation_decorators import *
 
@@ -85,9 +85,9 @@ class SceneRecognition(smach.State):
         detected_objects = []
 
         try:
-            rospy.wait_for_service('/env/world_model/get_found_object_list', timeout=5)
+            rospy.wait_for_service('/env/asr_world_model/get_found_object_list', timeout=5)
             get_detected_objects =rospy.ServiceProxy(
-                '/env/world_model/get_found_object_list', GetFoundObjectList)
+                '/env/asr_world_model/get_found_object_list', GetFoundObjectList)
             detected_objects_response = get_detected_objects()
             detected_objects = detected_objects_response.object_list
             rospy.loginfo("World model returns " + str(len(detected_objects)) + " found objects:")
@@ -120,9 +120,9 @@ class SceneRecognition(smach.State):
                     log.write("========================================================\n")
 
             try:
-                rospy.wait_for_service('/env/world_model/get_missing_object_list', timeout=5)
+                rospy.wait_for_service('/env/asr_world_model/get_missing_object_list', timeout=5)
                 get_found_all =rospy.ServiceProxy(
-                    '/env/world_model/get_missing_object_list', GetMissingObjectList)
+                    '/env/asr_world_model/get_missing_object_list', GetMissingObjectList)
                 get_missing_object_list_response = get_found_all()
             except (rospy.ServiceException, rospy.exceptions.ROSException), e:
                 rospy.logwarn(str(e))
@@ -150,8 +150,8 @@ class SceneRecognition(smach.State):
         if self.evaluateCompletePatternsModule is None:
             return False
 
-        rospy.wait_for_service('/env/world_model/get_complete_patterns', timeout=5)
-        get_complete_patterns_list = rospy.ServiceProxy('/env/world_model/get_complete_patterns', GetCompletePatterns)
+        rospy.wait_for_service('/env/asr_world_model/get_complete_patterns', timeout=5)
+        get_complete_patterns_list = rospy.ServiceProxy('/env/asr_world_model/get_complete_patterns', GetCompletePatterns)
         complete_patterns = get_complete_patterns_list().completePatterns
         rospy.loginfo("Got complete_patterns from world_model:\n" + str(complete_patterns))
 
@@ -192,9 +192,9 @@ class PosePrediction(smach.State):
         detected_objects = []
 
         try:
-            rospy.wait_for_service('/env/world_model/get_found_object_list', timeout=5)
+            rospy.wait_for_service('/env/asr_world_model/get_found_object_list', timeout=5)
             get_detected_objects =rospy.ServiceProxy(
-                '/env/world_model/get_found_object_list', GetFoundObjectList)
+                '/env/asr_world_model/get_found_object_list', GetFoundObjectList)
             detected_objects_response = get_detected_objects()
             detected_objects = detected_objects_response.object_list
             rospy.loginfo("World model returns " + str(len(detected_objects)) + " found objects:")

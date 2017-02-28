@@ -228,7 +228,7 @@ def shutdown_hook():
         except IOError:
             pass
         try:
-            shutil.copy(home + "/log/world_model.log", __builtin__.log_dir)
+            shutil.copy(home + "/log/asr_world_model.log", __builtin__.log_dir)
         except IOError:
             pass
         try:

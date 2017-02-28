@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(scene_exploration)
+project(asr_state_machine)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -17,7 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   recognition_for_grasping
   aruco_marker_recognition
   fake_object_recognition
-  world_model
+  asr_world_model
   recognizer_prediction_ism
   next_best_view
   move_base

@@ -20,10 +20,10 @@ import roslib
 import rospy
 import recognition_for_grasping.srv
 from asr_msgs.msg import AsrObject
-from world_model.srv import PushFoundObject, PushFoundObjectList
+from asr_world_model.srv import PushFoundObject, PushFoundObjectList
 import aruco_marker_recognition.srv 
 import fake_object_recognition.srv
-from world_model.srv import GetRecognizerName
+from asr_world_model.srv import GetRecognizerName
 import descriptor_surface_based_recognition.srv 
 
 class ObjectDetectorsManager:
@@ -159,7 +159,7 @@ class ObjectDetectorsManager:
         if rospy.get_param("/scene_exploration_sm/use_sensors") is True:
             try:
                 recognizer_name_call = rospy.ServiceProxy(
-                    '/env/world_model/get_recognizer_name',
+                    '/env/asr_world_model/get_recognizer_name',
                     GetRecognizerName)
             except rospy.ServiceException, e:
                 rospy.logwarn("Error calling get recognizer name service.")
@@ -195,7 +195,7 @@ class ObjectDetectorsManager:
         if rospy.get_param("/scene_exploration_sm/use_sensors") is True:
             try:
                 recognizer_name_call = rospy.ServiceProxy(
-                    '/env/world_model/get_recognizer_name',
+                    '/env/asr_world_model/get_recognizer_name',
                     GetRecognizerName)
             except rospy.ServiceException, e:
                 rospy.logwarn("Error calling get recognizer name service.")

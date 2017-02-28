@@ -30,7 +30,7 @@ import shutil
 import sys
 
 from select import select
-from world_model.srv import EmptyViewportList, EmptyCompletePatterns, GetAllObjectsList
+from asr_world_model.srv import EmptyViewportList, EmptyCompletePatterns, GetAllObjectsList
 from geometry_msgs.msg import (Pose, PoseWithCovariance, 
     PoseWithCovarianceStamped, Point, Quaternion, Twist)
 from asr_msgs.msg import AsrViewport
@@ -73,10 +73,10 @@ def create_log_folder():
     if True:
         scene_path = None
         try:
-            rospy.loginfo("wait_for_service /env/world_model/get_all_objects_list")
-            rospy.wait_for_service('/env/world_model/get_all_objects_list')
+            rospy.loginfo("wait_for_service /env/asr_world_model/get_all_objects_list")
+            rospy.wait_for_service('/env/asr_world_model/get_all_objects_list')
             get_all_objects_list = rospy.ServiceProxy(
-                '/env/world_model/get_all_objects_list', GetAllObjectsList)
+                '/env/asr_world_model/get_all_objects_list', GetAllObjectsList)
             scene_path = get_all_objects_list().scenePath
             
             rospy.loginfo("wait_for_service /rp_ism_node/set_log_dir")
@@ -99,17 +99,17 @@ def clear_world_model():
     Delete all viewports and objects from world model
     """
     try:
-        rospy.loginfo("wait_for_service /env/world_model/empty_found_object_list")
-        rospy.wait_for_service('/env/world_model/empty_found_object_list')
-        rospy.loginfo("wait_for_service /env/world_model/empty_viewport_list")
-        rospy.wait_for_service('/env/world_model/empty_viewport_list')
-        rospy.loginfo("wait_for_service /env/world_model/empty_complete_patterns")
-        rospy.wait_for_service('/env/world_model/empty_complete_patterns')
-        clear_object_list = rospy.ServiceProxy('/env/world_model/empty_found_object_list',
+        rospy.loginfo("wait_for_service /env/asr_world_model/empty_found_object_list")
+        rospy.wait_for_service('/env/asr_world_model/empty_found_object_list')
+        rospy.loginfo("wait_for_service /env/asr_world_model/empty_viewport_list")
+        rospy.wait_for_service('/env/asr_world_model/empty_viewport_list')
+        rospy.loginfo("wait_for_service /env/asr_world_model/empty_complete_patterns")
+        rospy.wait_for_service('/env/asr_world_model/empty_complete_patterns')
+        clear_object_list = rospy.ServiceProxy('/env/asr_world_model/empty_found_object_list',
                                             Empty)
-        clear_viewport_list = rospy.ServiceProxy('/env/world_model/empty_viewport_list',
+        clear_viewport_list = rospy.ServiceProxy('/env/asr_world_model/empty_viewport_list',
                                             EmptyViewportList)
-        empty_complete_patterns = rospy.ServiceProxy('/env/world_model/empty_complete_patterns',
+        empty_complete_patterns = rospy.ServiceProxy('/env/asr_world_model/empty_complete_patterns',
                                             EmptyCompletePatterns)
         clear_object_list()
         clear_viewport_list('all')
@@ -193,9 +193,9 @@ def start_rosbag(path):
     nbv_cropbox = rospy.get_param("/nbv/cropBoxVisualization")
     nbv_IK = rospy.get_param("/nbv/IKVisualization")
 
-    rospy.loginfo("wait_for_service /env/world_model/empty_found_object_list")
-    rospy.wait_for_service('/env/world_model/empty_found_object_list')
-    world_model_found = '/env/world_model/found_object_visualization'
+    rospy.loginfo("wait_for_service /env/asr_world_model/empty_found_object_list")
+    rospy.wait_for_service('/env/asr_world_model/empty_found_object_list')
+    world_model_found = '/env/asr_world_model/found_object_visualization'
     constellation_fake = '/fake_object_recognition/constellation_visualization'
 
     container_status = rospy.get_param("/scene_exploration_sm/container_status")
@@ -262,10 +262,10 @@ class SearchInit(smach.State):
         first_object_types_to_search = []
         if not self.searched_object_types:
             try:
-                rospy.loginfo("wait_for_service /env/world_model/get_all_objects_list")
-                rospy.wait_for_service('/env/world_model/get_all_objects_list')
+                rospy.loginfo("wait_for_service /env/asr_world_model/get_all_objects_list")
+                rospy.wait_for_service('/env/asr_world_model/get_all_objects_list')
                 get_all_objects_list = rospy.ServiceProxy(
-                    '/env/world_model/get_all_objects_list', GetAllObjectsList)
+                    '/env/asr_world_model/get_all_objects_list', GetAllObjectsList)
                 for object_type_and_id in get_all_objects_list().allObjects:
                     first_object_types_to_search.append(object_type_and_id.type)
             except (rospy.ServiceException, rospy.exceptions.ROSException), e:

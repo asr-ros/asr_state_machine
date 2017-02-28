@@ -28,7 +28,7 @@ import sys
 from asr_msgs.msg import AsrObject, AsrViewport
 from geometry_msgs.msg import (Pose, PoseWithCovariance, 
     PoseWithCovarianceStamped, Point, Quaternion, PoseStamped)
-from world_model.srv import PushFoundObject, PushFoundObjectList, GetMissingObjectList, PushViewport
+from asr_world_model.srv import PushFoundObject, PushFoundObjectList, GetMissingObjectList, PushViewport
 from evaluation_decorators import *
 from object_detectors_manager import ObjectDetectorsManager
 import state_acquisition
@@ -134,9 +134,9 @@ class ObjectDetection(smach.State):
 
         #Push viewports to world_model
         try:
-            rospy.wait_for_service('/env/world_model/push_viewport', timeout=5)
+            rospy.wait_for_service('/env/asr_world_model/push_viewport', timeout=5)
             push_viewport = rospy.ServiceProxy(
-                '/env/world_model/push_viewport', PushViewport)
+                '/env/asr_world_model/push_viewport', PushViewport)
             viewport = AsrViewport()
             viewport.pose = self.current_camera_pose
             viewport.object_type_name_list = self.searched_object_types
@@ -152,9 +152,9 @@ class ObjectDetection(smach.State):
 
         # Get all missing objects
         try:
-            rospy.wait_for_service('/env/world_model/get_missing_object_list', timeout=5)
+            rospy.wait_for_service('/env/asr_world_model/get_missing_object_list', timeout=5)
             get_missing_object_list =rospy.ServiceProxy(
-                '/env/world_model/get_missing_object_list', GetMissingObjectList)
+                '/env/asr_world_model/get_missing_object_list', GetMissingObjectList)
             self.missing_pbd_typeAndId = get_missing_object_list().missingObjects
 
         except (rospy.ServiceException, rospy.exceptions.ROSException), e:
@@ -220,10 +220,10 @@ class ObjectDetection(smach.State):
                               + " z: " + str(output_object.sampledPoses[0].pose.orientation.z)
                               + " w: " + str(output_object.sampledPoses[0].pose.orientation.w))
 
-            rospy.wait_for_service('/env/world_model/push_found_object_list',
+            rospy.wait_for_service('/env/asr_world_model/push_found_object_list',
                                    timeout=3)
             push_found_objects = rospy.ServiceProxy(
-                '/env/world_model/push_found_object_list', PushFoundObjectList)
+                '/env/asr_world_model/push_found_object_list', PushFoundObjectList)
             push_found_objects(list(self.detected_objects))
         except (rospy.exceptions.ROSException, rospy.ServiceException) as e:
             rospy.logwarn("Could not find world_model service")

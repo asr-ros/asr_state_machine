@@ -30,7 +30,7 @@ from actionlib import SimpleActionClient
 from actionlib.msg import actionlib
 from asr_direct_search_manager.msg import direct_search_manager
 from next_best_view.srv import TriggerFrustumVisualization
-from world_model.srv import GetMissingObjectList, GetAllObjectsList
+from asr_world_model.srv import GetMissingObjectList, GetAllObjectsList
 from asr_msgs.msg import AsrTypeAndId
 
 from evaluation_decorators import *
@@ -206,10 +206,10 @@ def trigger_frustum_viz(camera_pose):
 
 def get_all_object_types_and_ids():
     try:
-        rospy.loginfo("wait_for_service /env/world_model/get_all_objects_list")
-        rospy.wait_for_service('/env/world_model/get_all_objects_list', timeout=5)
+        rospy.loginfo("wait_for_service /env/asr_world_model/get_all_objects_list")
+        rospy.wait_for_service('/env/asr_world_model/get_all_objects_list', timeout=5)
         get_all_objects_list = rospy.ServiceProxy(
-                '/env/world_model/get_all_objects_list', GetAllObjectsList)
+                '/env/asr_world_model/get_all_objects_list', GetAllObjectsList)
         return get_all_objects_list().allObjects
     except (rospy.ServiceException, rospy.exceptions.ROSException), e:
         rospy.logwarn(str(e))
@@ -236,10 +236,10 @@ def get_object_types_and_ids_from_file():
 
 def get_missing_object_types_and_ids():
     try:
-        rospy.loginfo("wait_for_service /env/world_model/get_missing_object_list")
-        rospy.wait_for_service('/env/world_model/get_missing_object_list', timeout=5)
+        rospy.loginfo("wait_for_service /env/asr_world_model/get_missing_object_list")
+        rospy.wait_for_service('/env/asr_world_model/get_missing_object_list', timeout=5)
         get_missing_objects = rospy.ServiceProxy(
-            '/env/world_model/get_missing_object_list', GetMissingObjectList)
+            '/env/asr_world_model/get_missing_object_list', GetMissingObjectList)
         return get_missing_objects().missingObjects
     except (rospy.ServiceException, rospy.exceptions.ROSException), e:
         rospy.logwarn(str(e))

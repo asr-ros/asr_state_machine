@@ -28,7 +28,7 @@ import os
 
 from next_best_view.srv import *
 from next_best_view.msg import RobotStateMessage, NormalsInfo
-from world_model.srv import GetViewportList, FilterViewportDependingOnAlreadyVisitedViewports
+from asr_world_model.srv import GetViewportList, FilterViewportDependingOnAlreadyVisitedViewports
 from asr_msgs.msg import (AsrAttributedPointCloud, AsrAttributedPoint, AsrViewport)
 from geometry_msgs.msg import (Pose, PoseWithCovariance,
                                PoseWithCovarianceStamped, Point, Quaternion, Twist)
@@ -77,7 +77,7 @@ class NBVSetPointCloud(smach.State):
         try:
             rospy.wait_for_service('/nbv/set_point_cloud', timeout=5)
             rospy.wait_for_service('/nbv/remove_objects', timeout=5)
-            rospy.wait_for_service('/env/world_model/get_viewport_list', timeout=5)
+            rospy.wait_for_service('/env/asr_world_model/get_viewport_list', timeout=5)
         except rospy.exceptions.ROSException, e:
             rospy.loginfo("Couldn't reach service")
             return 'aborted'
@@ -87,7 +87,7 @@ class NBVSetPointCloud(smach.State):
             # services
             set_pc = rospy.ServiceProxy('/nbv/set_point_cloud', SetAttributedPointCloud)
             invalidate_point_cloud = rospy.ServiceProxy('/nbv/remove_objects', RemoveObjects)
-            get_viewports = rospy.ServiceProxy('/env/world_model/get_viewport_list', GetViewportList)
+            get_viewports = rospy.ServiceProxy('/env/asr_world_model/get_viewport_list', GetViewportList)
 
             # used to get points in nbv service call
             pointCloud = userdata.object_pointcloud
@@ -245,8 +245,8 @@ class NextBestView(smach.State):
             viewport.object_type_name_list = get_nbv_rsp.object_type_name_list
 
             if rospy.get_param("/scene_exploration_sm/filter_viewports"):
-                rospy.wait_for_service('/env/world_model/filter_viewport_depending_on_already_visited_viewports')
-                filterViewportServ = rospy.ServiceProxy('/env/world_model/filter_viewport_depending_on_already_visited_viewports',
+                rospy.wait_for_service('/env/asr_world_model/filter_viewport_depending_on_already_visited_viewports')
+                filterViewportServ = rospy.ServiceProxy('/env/asr_world_model/filter_viewport_depending_on_already_visited_viewports',
                                         FilterViewportDependingOnAlreadyVisitedViewports)
                 filterViewportResp = filterViewportServ(viewport)
 

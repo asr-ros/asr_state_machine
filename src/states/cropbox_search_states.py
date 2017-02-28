@@ -30,7 +30,7 @@ from geometry_msgs.msg import Pose, Point, Quaternion
 from nav_msgs.msg import OccupancyGrid
 
 from evaluation_decorators import *
-from world_model.srv import GetIntermediateObjectWeight, GetRecognizerName
+from asr_world_model.srv import GetIntermediateObjectWeight, GetRecognizerName
 
 class CropBoxGeneration(smach.State):
     """

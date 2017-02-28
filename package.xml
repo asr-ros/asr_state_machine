@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>scene_exploration</name>
+  <name>asr_state_machine</name>
   <version>1.0.0</version>
   <description>The state machines in this package are run on MILD to perform direct/indirect search</description>
   <author>Allgeyer Tobias, Aumann Florian, Borella Jocelyn, Hutmacher Robin, Karrenbauer Oliver, Marek Felix, Meißner Pascal, Trautmann Jeremias, Wittenbeck Valerij</author>
@@ -21,7 +21,7 @@
   <build_depend>aruco_marker_recognition</build_depend>
   <build_depend>descriptor_surface_based_recognition</build_depend>
   <build_depend>fake_object_recognition</build_depend>
-  <build_depend>world_model</build_depend>
+  <build_depend>asr_world_model</build_depend>
   <build_depend>recognizer_prediction_ism</build_depend>
   <build_depend>next_best_view</build_depend>
   <build_depend>asr_direct_search_manager</build_depend>
@@ -44,7 +44,7 @@
   <run_depend>aruco_marker_recognition</run_depend>
   <run_depend>descriptor_surface_based_recognition</run_depend>
   <run_depend>fake_object_recognition</run_depend>
-  <run_depend>world_model</run_depend>
+  <run_depend>asr_world_model</run_depend>
   <run_depend>recognizer_prediction_ism</run_depend>
   <run_depend>next_best_view</run_depend>
   <run_depend>asr_direct_search_manager</run_depend>
