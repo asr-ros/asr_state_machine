@@ -28,7 +28,7 @@ import xml.etree.ElementTree as ET
 
 from actionlib import SimpleActionClient
 from actionlib.msg import actionlib
-from asr_direct_search_manager.msg import direct_search_manager
+import asr_direct_search_manager
 from next_best_view.srv import TriggerFrustumVisualization
 from asr_world_model.srv import GetMissingObjectList, GetAllObjectsList
 from asr_msgs.msg import AsrTypeAndId
@@ -174,7 +174,7 @@ class FrustumViz(smach.State):
 
 def execute_direct_search_action(action_command, searched_object_types_and_ids=None):
     rospy.loginfo("Direct search manager service call for: " + str(action_command))
-    client = actionlib.SimpleActionClient('direct_search_manager', asr_direct_search_manager.msg.directSearchAction)
+    client = actionlib.SimpleActionClient('asr_direct_search_manager', asr_direct_search_manager.msg.directSearchAction)
     client.wait_for_server()
     goal = asr_direct_search_manager.msg.directSearchGoal(command=str(action_command), searchedObjectTypesAndIds=searched_object_types_and_ids)
     client.send_goal(goal)
