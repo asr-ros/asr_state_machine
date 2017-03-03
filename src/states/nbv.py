@@ -26,8 +26,8 @@ import math
 import pickle
 import os
 
-from next_best_view.srv import *
-from next_best_view.msg import RobotStateMessage, NormalsInfo
+from asr_next_best_view.srv import *
+from asr_next_best_view.msg import RobotStateMessage, NormalsInfo
 from asr_world_model.srv import GetViewportList, FilterViewportDependingOnAlreadyVisitedViewports
 from asr_msgs.msg import (AsrAttributedPointCloud, AsrAttributedPoint, AsrViewport)
 from geometry_msgs.msg import (Pose, PoseWithCovariance,

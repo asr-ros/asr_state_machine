@@ -29,7 +29,7 @@ import xml.etree.ElementTree as ET
 from actionlib import SimpleActionClient
 from actionlib.msg import actionlib
 from asr_direct_search_manager.msg import asr_direct_search_manager
-from next_best_view.srv import TriggerFrustumVisualization
+from asr_next_best_view.srv import TriggerFrustumVisualization
 from asr_world_model.srv import GetMissingObjectList, GetAllObjectsList
 from asr_msgs.msg import AsrTypeAndId
 

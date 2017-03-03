@@ -19,7 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   fake_object_recognition
   asr_world_model
   recognizer_prediction_ism
-  next_best_view
+  asr_next_best_view
   move_base
   asr_flir_ptu_controller
   tf

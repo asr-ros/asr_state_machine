@@ -25,7 +25,7 @@ from time import time
 import math
 
 from geometry_msgs.msg import (Pose, Point, Quaternion)
-from next_best_view.msg import RobotStateMessage
+from asr_next_best_view.msg import RobotStateMessage
 from asr_robot_model_services.srv import GetPose
 from sensor_msgs.msg import JointState
 import tf

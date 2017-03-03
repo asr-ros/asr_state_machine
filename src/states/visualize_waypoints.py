@@ -26,7 +26,7 @@ import time
 import timeit
 
 from geometry_msgs.msg import (Pose, Point, Vector3)
-from next_best_view.srv import TriggerFrustumVisualization
+from asr_next_best_view.srv import TriggerFrustumVisualization
 from evaluation_decorators import *
 from visualization_msgs.msg import Marker
 from std_msgs.msg import ColorRGBA
