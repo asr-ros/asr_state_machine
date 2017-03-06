@@ -23,7 +23,7 @@ import smach_ros
 import __builtin__
 import imp
 
-from recognizer_prediction_ism.srv import FindScenes, GetPointCloud
+from asr_recognizer_prediction_ism.srv import FindScenes, GetPointCloud
 from asr_msgs.msg import AsrObject, AsrTypeAndId
 from asr_msgs.msg import AsrAttributedPointCloud, AsrAttributedPoint
 from asr_world_model.msg import CompletePattern
@@ -163,7 +163,7 @@ class PosePrediction(smach.State):
     """
     Generates AttributedPointCloud for scene hypotheses resampled by particle filter in rp_ism_node. The scene
     hypotheses (all from scene recognition) for resampling is not passed in the userdata, but directly inside the
-    recognizer_prediction_ism package. We get into this state if the scene recognition
+    asr_recognizer_prediction_ism package. We get into this state if the scene recognition
     recognized at least one scene.
     """
 

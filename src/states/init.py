@@ -37,7 +37,7 @@ from asr_msgs.msg import AsrViewport
 from evaluation_decorators import *
 from nav_msgs.msg import Odometry
 from std_srvs.srv import Empty
-from recognizer_prediction_ism.srv import SetLogDir
+from asr_recognizer_prediction_ism.srv import SetLogDir
 from os.path import expanduser
 from states.direct_search_states import execute_direct_search_action
 

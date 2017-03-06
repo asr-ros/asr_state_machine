@@ -27,7 +27,7 @@
   <build_depend>descriptor_surface_based_recognition</build_depend>
   <build_depend>fake_object_recognition</build_depend>
   <build_depend>asr_world_model</build_depend>
-  <build_depend>recognizer_prediction_ism</build_depend>
+  <build_depend>asr_recognizer_prediction_ism</build_depend>
   <build_depend>asr_next_best_view</build_depend>
   <build_depend>asr_direct_search_manager</build_depend>
   <build_depend>move_base</build_depend>
@@ -50,7 +50,7 @@
   <run_depend>descriptor_surface_based_recognition</run_depend>
   <run_depend>fake_object_recognition</run_depend>
   <run_depend>asr_world_model</run_depend>
-  <run_depend>recognizer_prediction_ism</run_depend>
+  <run_depend>asr_recognizer_prediction_ism</run_depend>
   <run_depend>asr_next_best_view</run_depend>
   <run_depend>asr_direct_search_manager</run_depend>
   <run_depend>move_base</run_depend>

@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   aruco_marker_recognition
   fake_object_recognition
   asr_world_model
-  recognizer_prediction_ism
+  asr_recognizer_prediction_ism
   asr_next_best_view
   move_base
   asr_flir_ptu_controller
