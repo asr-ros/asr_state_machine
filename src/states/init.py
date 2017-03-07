@@ -196,7 +196,7 @@ def start_rosbag(path):
     rospy.loginfo("wait_for_service /env/asr_world_model/empty_found_object_list")
     rospy.wait_for_service('/env/asr_world_model/empty_found_object_list')
     world_model_found = '/env/asr_world_model/found_object_visualization'
-    constellation_fake = '/fake_object_recognition/constellation_visualization'
+    constellation_fake = '/asr_fake_object_recognition/constellation_visualization'
 
     container_status = rospy.get_param("/scene_exploration_sm/container_status")
     container_init = rospy.get_param("/scene_exploration_sm/container_init")
