@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   visualization_msgs
   asr_msgs
   recognition_for_grasping
-  aruco_marker_recognition
+  asr_aruco_marker_recognition
   fake_object_recognition
   asr_world_model
   asr_recognizer_prediction_ism

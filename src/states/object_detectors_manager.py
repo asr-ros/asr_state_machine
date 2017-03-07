@@ -21,7 +21,7 @@ import rospy
 import recognition_for_grasping.srv
 from asr_msgs.msg import AsrObject
 from asr_world_model.srv import PushFoundObject, PushFoundObjectList
-import aruco_marker_recognition.srv 
+import asr_aruco_marker_recognition.srv 
 import fake_object_recognition.srv
 from asr_world_model.srv import GetRecognizerName
 import asr_descriptor_surface_based_recognition.srv 
@@ -49,11 +49,11 @@ class ObjectDetectorsManager:
     def start_markers(self):
         try:
             rospy.wait_for_service(
-                    '/aruco_marker_recognition/get_recognizer',
+                    '/asr_aruco_marker_recognition/get_recognizer',
                     timeout=3)
             marker_recognizer = rospy.ServiceProxy(
-                    '/aruco_marker_recognition/get_recognizer',
-                    aruco_marker_recognition.srv.GetRecognizer)
+                    '/asr_aruco_marker_recognition/get_recognizer',
+                    asr_aruco_marker_recognition.srv.GetRecognizer)
             marker_recognizer()
         except (rospy.exceptions.ROSException, rospy.ServiceException) as e:
             rospy.logwarn("Service error with marker recognizer")
@@ -112,8 +112,8 @@ class ObjectDetectorsManager:
     def stop_markers(self):
         try:
             release_marker_recognizer = rospy.ServiceProxy(
-                    '/aruco_marker_recognition/release_recognizer',
-                    aruco_marker_recognition.srv.ReleaseRecognizer)
+                    '/asr_aruco_marker_recognition/release_recognizer',
+                    asr_aruco_marker_recognition.srv.ReleaseRecognizer)
         except rospy.ServiceException, e:
             rospy.logwarn("Error calling the release recognizer services for marker recognition.")
             return 'aborted'
