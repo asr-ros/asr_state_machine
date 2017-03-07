@@ -43,7 +43,7 @@ import subprocess
 from os.path import expanduser
 from recognition_for_grasping.srv import ClearAllRecognizers as GraspingClearAllRecognizers
 from fake_object_recognition.srv import ClearAllRecognizers as FakeObjectClearAllRecognizers
-from descriptor_surface_based_recognition.srv import ClearAllRecognizers as DescriptorSurfaceClearAllRecognizers
+from asr_descriptor_surface_based_recognition.srv import ClearAllRecognizers as DescriptorSurfaceClearAllRecognizers
 from aruco_marker_recognition.srv import ReleaseRecognizer
 from asr_visualization_server.srv import DrawAllModelsMild
 from states.state_acquisition import GetRobotState
@@ -258,10 +258,10 @@ def shutdown_hook():
         except rospy.ServiceException, e:
             rospy.logwarn("Error calling the clear for recognition_manager/clear_all_recognizers service: " + str(e))
         try:
-            release_desc_recognizers = rospy.ServiceProxy('/descriptor_surface_based_recognition/clear_all_recognizers', DescriptorSurfaceClearAllRecognizers)
+            release_desc_recognizers = rospy.ServiceProxy('/asr_descriptor_surface_based_recognition/clear_all_recognizers', DescriptorSurfaceClearAllRecognizers)
             release_desc_recognizers()
         except rospy.ServiceException, e:
-            rospy.logwarn("Error calling the clear for /descriptor_surface_based_recognition/clear_all_recognizers service: " + str(e))
+            rospy.logwarn("Error calling the clear for /asr_descriptor_surface_based_recognition/clear_all_recognizers service: " + str(e))
         try:
             release_marker_recognizers = rospy.ServiceProxy('/aruco_marker_recognition/release_recognizer', ReleaseRecognizer)
             release_marker_recognizers()

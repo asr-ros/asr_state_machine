@@ -26,8 +26,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   asr_visualization_server
 )
-#@Tobias: Please fix.
-#  descriptor_surface_based_recognition
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
