@@ -22,7 +22,7 @@ import recognition_for_grasping.srv
 from asr_msgs.msg import AsrObject
 from asr_world_model.srv import PushFoundObject, PushFoundObjectList
 import asr_aruco_marker_recognition.srv 
-import fake_object_recognition.srv
+import asr_fake_object_recognition.srv
 from asr_world_model.srv import GetRecognizerName
 import asr_descriptor_surface_based_recognition.srv 
 
@@ -125,8 +125,8 @@ class ObjectDetectorsManager:
         fake_recognizer = None
         try:
             fake_recognizer = rospy.ServiceProxy(
-                '/fake_object_recognition/get_recognizer',
-                fake_object_recognition.srv.GetRecognizer)
+                '/asr_fake_object_recognition/get_recognizer',
+                asr_fake_object_recognition.srv.GetRecognizer)
 
         except rospy.ServiceException, e:
             rospy.logwarn("Error calling \'get\' fake based recognizer service.")
@@ -141,15 +141,15 @@ class ObjectDetectorsManager:
         fake_recognizer = None
         try:
             fake_recognizer = rospy.ServiceProxy(
-                '/fake_object_recognition/release_recognizer',
-                fake_object_recognition.srv.ReleaseRecognizer)
+                '/asr_fake_object_recognition/release_recognizer',
+                asr_fake_object_recognition.srv.ReleaseRecognizer)
 
         except rospy.ServiceException, e:
             rospy.logwarn("Error calling \'release\' fake based recognizer service.")
             return 'aborted'
         for object in searched_object_types:
             fake_recognizer(str(object))
-        rospy.loginfo("Recognition of "+str(searched_object_types)+" released for fake_object_recognition.")
+        rospy.loginfo("Recognition of "+str(searched_object_types)+" released for asr_fake_object_recognition.")
         return 'succeeded'
 
 

@@ -42,7 +42,7 @@ import signal
 import subprocess
 from os.path import expanduser
 from recognition_for_grasping.srv import ClearAllRecognizers as GraspingClearAllRecognizers
-from fake_object_recognition.srv import ClearAllRecognizers as FakeObjectClearAllRecognizers
+from asr_fake_object_recognition.srv import ClearAllRecognizers as FakeObjectClearAllRecognizers
 from asr_descriptor_surface_based_recognition.srv import ClearAllRecognizers as DescriptorSurfaceClearAllRecognizers
 from asr_aruco_marker_recognition.srv import ReleaseRecognizer
 from asr_visualization_server.srv import DrawAllModelsMild
@@ -247,10 +247,10 @@ def shutdown_hook():
     #Stop recognizers in case signal is caught during object detection.
     if rospy.get_param("/scene_exploration_sm/use_sensors") is False:
         try:
-            release_fake_recognizers = rospy.ServiceProxy('/fake_object_recognition/clear_all_recognizers', FakeObjectClearAllRecognizers)
+            release_fake_recognizers = rospy.ServiceProxy('/asr_fake_object_recognition/clear_all_recognizers', FakeObjectClearAllRecognizers)
             release_fake_recognizers()
         except rospy.ServiceException, e:
-            rospy.logwarn("Error calling the clear for /fake_object_recognition/clear_all_recognizers service: " + str(e))
+            rospy.logwarn("Error calling the clear for /asr_fake_object_recognition/clear_all_recognizers service: " + str(e))
     else:
         try:
             release_tex_seg_recognizers = rospy.ServiceProxy('/recognition_manager/clear_all_recognizers', GraspingClearAllRecognizers)
