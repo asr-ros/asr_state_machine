@@ -59,7 +59,7 @@ class PoseSampling(smach.State):
 
     def execute(self, userdata):
 
-        pcl = AttributedPointCloud()
+        pcl = AsrAttributedPointCloud()
         sample_size = 200
         # Define accumulation points
         hp = []
@@ -74,7 +74,7 @@ class PoseSampling(smach.State):
                 random_vector = self.get_random_vector(hp[idx], [.5, .5, 0.2])
                 random_quaternion = self.get_random_quaternion() 
 
-                element = AttributedPoint()
+                element = AsrAttributedPoint()
                 pose = Pose()
                 pose.orientation = Quaternion(*random_quaternion)
                 pose.position = Point(*random_vector)

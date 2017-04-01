@@ -20,6 +20,7 @@ import roslib
 import rospy
 import smach
 import smach_ros
+import threading
 
 from pose_sampling import *
 
@@ -38,7 +39,7 @@ class ISMInit(smach.State):
     def __init__(self):
         smach.State.__init__(
                 self,
-                outcomes=['succeeded', 'aborted'],
+                outcomes=['succeeded'],
                 output_keys=['searched_object_types'])
 
     def execute(self, userdata):
@@ -52,26 +53,40 @@ class ISMInit(smach.State):
 def main():
     rospy.init_node('object_detection_sm')
 
-    sm_object_detection = smach.StateMachine(outcomes=['succeeded', 'aborted',
+    sm_object_detection = smach.StateMachine(outcomes=['succeeded',
+                                                       'aborted',
                                                        'no_objects_found',
-                                                       'explored_all',
-                                                       'found_all_objects'])
+                                                       'found_all_required_scenes',
+                                                       'found_all_objects',
+                                                       'no_predictions_left'])
 
     with sm_object_detection:
         smach.StateMachine.add("INIT",
                                ISMInit(),
-                               transitions={'succeeded': 'OBJECT_DETECTION'})
+                               transitions={'succeeded': 'OBJECT_DETECTION'},
+                               remapping={'searched_object_types':'searched_object_types'})
 
         smach.StateMachine.add('OBJECT_DETECTION',
                                ObjectDetection(),
-                               transitions={'succeeded': 'SCENE_RECOGNITION'})
+                               transitions={'no_objects_found':'no_objects_found',
+                                            'found_objects':'SCENE_RECOGNITION',
+                                            'aborted':'aborted'},
+                               remapping={'searched_object_types':'searched_object_types',
+                                          'detected_objects':'detected_objects'})
 
         smach.StateMachine.add('SCENE_RECOGNITION',
                                SceneRecognition(),
-                               transitions={'found_scenes': 'OBJECT_POSE_PREDICTION'})
+                               transitions={'found_scenes':'OBJECT_POSE_PREDICTION',
+                                            'found_all_required_scenes':'found_all_required_scenes',
+                                            'found_all_objects':'found_all_objects',
+                                            'aborted':'aborted'})
 
         smach.StateMachine.add('OBJECT_POSE_PREDICTION',
-                               PosePrediction())
+                               PosePrediction(),
+                               transitions={'succeeded':'succeeded',
+                                            'aborted':'aborted',
+                                            'no_predictions_left':'no_predictions_left'},
+                               remapping={'object_pointcloud':'object_pointcloud'})
 
 
     # smach.set_preempt_hanlder(sm_main)

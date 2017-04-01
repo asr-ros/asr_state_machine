@@ -22,11 +22,10 @@ import numpy
 import tf
 import math
 
-from next_best_view.srv import *
-from next_best_view.msg import RobotStateMessage
-from asr_msgs.msg import (AsrAttributedPointCloud, AsrAttributedPoint)
-from geometry_msgs.msg import (Pose, PoseWithCovariance,
-                               PoseWithCovarianceStamped, Point, Quaternion, Twist)
+from asr_next_best_view.srv import SetAttributedPointCloud
+from asr_next_best_view.msg import RobotStateMessage
+from asr_msgs.msg import AsrAttributedPointCloud, AsrAttributedPoint
+from geometry_msgs.msg import Point, Quaternion, Twist
 
 
 def main():
@@ -44,10 +43,6 @@ def main():
                 point_cloud.elements.append(point)
                 print point
 
-        actual_camera_pose = Pose()
-        actual_camera_pose.position = Point(*[0, 0, 1.37])
-        actual_camera_pose.orientation = Quaternion(*[1, 0, 0, 1])
-
         try:
             rospy.wait_for_service('/nbv/set_point_cloud', timeout=5)
         except rospy.exceptions.ROSException, e:
@@ -56,7 +51,7 @@ def main():
 
         set_pc = rospy.ServiceProxy('/nbv/set_point_cloud',
                                     SetAttributedPointCloud)
-        set_pc_rsp = set_pc(point_cloud, actual_camera_pose)
+        set_pc_rsp = set_pc(point_cloud)
 
         if set_pc_rsp.is_valid == False:
             rospy.signal_shutdown('Service call unsucessful')

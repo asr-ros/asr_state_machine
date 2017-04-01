@@ -22,6 +22,12 @@ import smach
 import smach_ros
 
 from pose_sampling import *
+
+# To import files from parten directories
+if __name__ == '__main__' and __package__ is None:
+    from os import sys, path
+    sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+
 from common.move import * 
 from indirect_search.ism import *
 from indirect_search.nbv import *
@@ -52,7 +58,12 @@ def main():
                                transitions={'succeeded': 'OBJECT_DETECTION'})
 
         smach.StateMachine.add('OBJECT_DETECTION',
-                               ObjectDetection())
+                               ObjectDetection(),
+                               transitions={'no_objects_found':'no_objects_found',
+                                            'found_objects':'succeeded',
+                                            'aborted':'aborted'},
+                               remapping={'searched_object_types':'searched_object_types',
+                                          'detected_objects':'detected_objects'})
 
     server = smach_ros.IntrospectionServer(
         'object_detection_test_sm',
