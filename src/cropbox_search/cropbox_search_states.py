@@ -78,11 +78,12 @@ class CropBoxGeneration(smach.State):
         fcp = rospy.get_param("/nbv/fcp")
         ncp = rospy.get_param("/nbv/ncp")
       
+        distToMiddleOfFrustum = (fcp + ncp) / 2.0
         fovx = rospy.get_param("/nbv/fovx")
-        self.groudStep = min((fcp - ncp) * math.tan(math.radians(fovx) / 2.0), (fcp - ncp))
+        self.groudStep = min(distToMiddleOfFrustum * math.tan(math.radians(fovx) / 2.0), (fcp - ncp))
 
         fovy = rospy.get_param("/nbv/fovy")
-        self.heightStep = (fcp - ncp) * math.tan(math.radians(fovy) / 2.0)
+        self.heightStep = distToMiddleOfFrustum * math.tan(math.radians(fovy) / 2.0)
         rospy.loginfo("Interval of points in point_cloud on groud: " + str(self.groudStep) + " and in height: " + str(self.heightStep))
 
 
