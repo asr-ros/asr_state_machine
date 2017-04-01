@@ -29,7 +29,7 @@ from asr_msgs.msg import AsrAttributedPointCloud, AsrAttributedPoint
 from asr_world_model.msg import CompletePattern
 from asr_world_model.srv import GetFoundObjectList, GetMissingObjectList, GetCompletePatterns
 
-from evaluation_decorators import *
+from common.evaluation_decorators import *
 
 
 """

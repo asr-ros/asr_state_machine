@@ -29,7 +29,7 @@ from asr_msgs.msg import AsrAttributedPointCloud, AsrAttributedPoint
 from geometry_msgs.msg import Pose, Point, Quaternion
 from nav_msgs.msg import OccupancyGrid
 
-from evaluation_decorators import *
+from common.evaluation_decorators import *
 from asr_world_model.srv import GetIntermediateObjectWeight, GetRecognizerName
 
 class CropBoxGeneration(smach.State):

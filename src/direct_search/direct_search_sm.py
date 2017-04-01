@@ -21,12 +21,12 @@ import rospy
 import smach
 import smach_ros
 
-from common_sm import GetMoveRobotSateMachine
-from states.direct_search_states import DirectSearchInit, GetGoalCameraPose, CheckSearchFinished, FrustumViz
-from states.object_detection import ObjectDetection
-from states.move import MovePTU, PTUPoseCorrection
-from states.ism import SceneRecognition
-from states.visualize_waypoints import VisualizeWaypoints
+from common.common_sm import GetMoveRobotSateMachine
+from direct_search_states import DirectSearchInit, GetGoalCameraPose, CheckSearchFinished, FrustumViz
+from common.object_detection import ObjectDetection
+from common.move import MovePTU, PTUPoseCorrection
+from indirect_search.ism import SceneRecognition
+from common.visualize_waypoints import VisualizeWaypoints
 
 class DirectSearchStateMachine():
 

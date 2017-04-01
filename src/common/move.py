@@ -32,7 +32,7 @@ from asr_robot_model_services.srv import CalculateCameraPoseCorrection
 from nav_msgs.msg import Odometry
 from actionlib import *
 from actionlib.msg import *
-from evaluation_decorators import *
+from common.evaluation_decorators import *
 from visualization_msgs.msg import Marker
 from std_msgs.msg import ColorRGBA
 import state_acquisition

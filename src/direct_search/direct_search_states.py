@@ -22,8 +22,8 @@ import smach
 import smach_ros
 import time
 import types
-import states.init
-import states.state_acquisition as state_acquisition
+import common.init
+import common.state_acquisition as state_acquisition
 import xml.etree.ElementTree as ET
 
 from actionlib import SimpleActionClient
@@ -33,7 +33,7 @@ from asr_next_best_view.srv import TriggerFrustumVisualization
 from asr_world_model.srv import GetMissingObjectList, GetAllObjectsList
 from asr_msgs.msg import AsrTypeAndId
 
-from evaluation_decorators import *
+from common.evaluation_decorators import *
 
 """
 This file defines useful states for usage with the MILD infrastructure. Keep in
@@ -82,9 +82,9 @@ class DirectSearchInit(smach.State):
 
         mode = rospy.get_param('/scene_exploration_sm/mode')
         if mode != 3:
-            states.init.clear_costmap()
-            states.init.clear_world_model()
-            states.init.reset_ism()
+            common.init.clear_costmap()
+            common.init.clear_world_model()
+            common.init.reset_ism()
             result = execute_direct_search_action("Reset")
             if (result == 'aborted'):
                 return 'aborted'

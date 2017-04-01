@@ -21,12 +21,12 @@ import rospy
 import smach
 import smach_ros
 
-from common_sm import GetRelationBasedSearchStateMachine
-from states.ism import SceneRecognition, PosePrediction
-from states.nbv import NBVSetPointCloud
-from states.object_detection import ObjectDetection
-from states.init import SearchInit
-from states.visualize_waypoints import VisualizeWaypoints
+from common.common_sm import GetRelationBasedSearchStateMachine
+from ism import SceneRecognition, PosePrediction
+from nbv import NBVSetPointCloud
+from common.object_detection import ObjectDetection
+from common.init import SearchInit
+from common.visualize_waypoints import VisualizeWaypoints
 
 class IndirectSearchStateMachine():
 

@@ -30,13 +30,14 @@ from actionlib import *
 from actionlib.msg import *
 import sensor_msgs.msg
 import math
-from indirect_search_sm import IndirectSearchStateMachine
-from direct_search_sm import DirectSearchStateMachine
-from random_search_sm import RandomSearchStateMachine
-from cropbox_search_sm import CropBoxSearchStateMachine
-from cropbox_record_sm import CropBoxRecordStateMachine
-from grid_init_record_sm import GridInitRecordStateMachine
-import states.init
+from indirect_search.indirect_search_sm import IndirectSearchStateMachine
+from direct_search.direct_search_sm import DirectSearchStateMachine
+from random_search.random_search_sm import RandomSearchStateMachine
+from cropbox_search.cropbox_search_sm import CropBoxSearchStateMachine
+from cropbox_search.cropbox_record_sm import CropBoxRecordStateMachine
+from direct_search.grid_init_record_sm import GridInitRecordStateMachine
+import common.init
+from common.state_acquisition import GetRobotState
 import __builtin__ # hack for sharing log dir
 import signal
 import subprocess
@@ -46,7 +47,6 @@ from asr_fake_object_recognition.srv import ClearAllRecognizers as FakeObjectCle
 from asr_descriptor_surface_based_recognition.srv import ClearAllRecognizers as DescriptorSurfaceClearAllRecognizers
 from asr_aruco_marker_recognition.srv import ReleaseRecognizer
 from asr_visualization_server.srv import DrawAllModelsMild
-from states.state_acquisition import GetRobotState
 
 # Naming convention
 #   State names are all capitalized with underscores, e.g. MVU_PTU
@@ -83,11 +83,11 @@ def main():
     # Set True if you want to wait for key press after states
     __builtin__.evaluation = False
 
-    log_dir = states.init.create_log_folder()
+    log_dir = common.init.create_log_folder()
     __builtin__.log_dir = log_dir
 
     # Record to rosbag
-    rosbag_proc = states.init.start_rosbag(log_dir)
+    rosbag_proc = common.init.start_rosbag(log_dir)
     # Add 3d models to labor map
     rospy.loginfo("Waiting for visualization_server-service to become available")
     rospy.wait_for_service('visualization/draw_all_models_mild')
@@ -102,7 +102,7 @@ def main():
     # get initial objects from user
     # sleep just to wait till all init output is done
     rospy.sleep(1)
-    initial_objects = states.init.get_initial_objects()
+    initial_objects = common.init.get_initial_objects()
     rospy.loginfo("initial_objects: " + str(initial_objects))
 
 
@@ -147,7 +147,7 @@ def main():
         # construct meta state machine
         with sm_object_search:
             smach.StateMachine.add('OBJECT_SEARCH_INIT',
-                                   states.init.ObjectSearchInit(),
+                                   common.init.ObjectSearchInit(),
                                    transitions={'succeeded':'DIRECT_SEARCH',
                                                 'aborted':'aborted'})
 

@@ -34,12 +34,12 @@ from asr_world_model.srv import EmptyViewportList, EmptyCompletePatterns, GetAll
 from geometry_msgs.msg import (Pose, PoseWithCovariance, 
     PoseWithCovarianceStamped, Point, Quaternion, Twist)
 from asr_msgs.msg import AsrViewport
-from evaluation_decorators import *
+from common.evaluation_decorators import *
 from nav_msgs.msg import Odometry
 from std_srvs.srv import Empty
 from asr_recognizer_prediction_ism.srv import SetLogDir
 from os.path import expanduser
-from states.direct_search_states import execute_direct_search_action
+from direct_search.direct_search_states import execute_direct_search_action
 
 """
 Contains all initialization states and useful methods for initialization.

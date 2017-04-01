@@ -25,15 +25,21 @@ import random
 import numpy as np
 import tf
 #from States import *
-import states.init
 import __builtin__ # hack for sharing log dir
 
 from pose_sampling import *
-from states.move import * 
-from states.ism import *
-from states.nbv import *
-from states.object_detection import *
-from states.visualize_waypoints import *
+
+# To import files from parten directories
+if __name__ == '__main__' and __package__ is None:
+    from os import sys, path
+    sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+
+import common.init
+from common.move import * 
+from indirect_search.ism import *
+from indirect_search.nbv import *
+from common.object_detection import *
+from common.visualize_waypoints import *
 
 """
 Simple test implementing the same test case than Ralfs NBV test in the NBV
@@ -43,7 +49,7 @@ package. It samples some points and moves to them to invalidate.
 def main():
     rospy.init_node('nbv_test_automat')
 
-    log_dir = states.init.create_log_folder()
+    log_dir = common.init.create_log_folder()
     __builtin__.log_dir = log_dir
     __builtin__.evaluation = False
     

@@ -29,7 +29,7 @@ from asr_msgs.msg import AsrObject, AsrViewport
 from geometry_msgs.msg import (Pose, PoseWithCovariance, 
     PoseWithCovarianceStamped, Point, Quaternion, PoseStamped)
 from asr_world_model.srv import PushFoundObject, PushFoundObjectList, GetMissingObjectList, PushViewport
-from evaluation_decorators import *
+from common.evaluation_decorators import *
 from object_detectors_manager import ObjectDetectorsManager
 import state_acquisition
 

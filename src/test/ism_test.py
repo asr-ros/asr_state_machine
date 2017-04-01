@@ -20,14 +20,18 @@ import roslib
 import rospy
 import smach
 import smach_ros
-import states.state_acquisition as state_acquisition
-import states.init as init
 
 from pose_sampling import *
-from states.ism import *
-from states.nbv import *
-from states.object_detection import *
-from states.init import *
+
+# To import files from parten directories
+if __name__ == '__main__' and __package__ is None:
+    from os import sys, path
+    sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
+
+from indirect_search.ism import SceneRecognition, PosePrediction
+from common.object_detection import ObjectDetection
+from common.init import clear_world_model
+
 from geometry_msgs.msg import Pose, Point, Quaternion
 
 class ISMInit(smach.State):
@@ -38,7 +42,7 @@ class ISMInit(smach.State):
                 output_keys=['searched_object_types'])
 
     def execute(self, userdata):
-        init.clear_world_model()
+        clear_world_model()
         # objects used in the scenario
         userdata.searched_object_types = ['PlateDeep', 'Smacks', 'CupPdV']
 

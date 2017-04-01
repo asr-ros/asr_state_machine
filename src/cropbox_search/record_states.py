@@ -28,8 +28,8 @@ import os.path
 from lxml import etree
 
 from geometry_msgs.msg import Pose, Point, Quaternion
-import state_acquisition as state_acquisition
-from evaluation_decorators import *
+import common.state_acquisition as state_acquisition
+from common.evaluation_decorators import *
 
 class CropboxStateRecording(smach.State):
     """

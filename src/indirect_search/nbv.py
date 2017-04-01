@@ -33,9 +33,9 @@ from asr_msgs.msg import (AsrAttributedPointCloud, AsrAttributedPoint, AsrViewpo
 from geometry_msgs.msg import (Pose, PoseWithCovariance,
                                PoseWithCovarianceStamped, Point, Quaternion, Twist)
 
-from evaluation_decorators import *
+from common.evaluation_decorators import *
 import __builtin__
-import state_acquisition
+import common.state_acquisition
 
 """
 States and methods for using the Next-Best-View package.

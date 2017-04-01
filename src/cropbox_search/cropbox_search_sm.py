@@ -21,11 +21,11 @@ import rospy
 import smach
 import smach_ros
 
-from common_sm import GetRelationBasedSearchStateMachine
-from states.init import SearchInit
-from states.ism import SceneRecognition
-from states.nbv import NBVSetPointCloud
-from states.cropbox_search_states import CropBoxGeneration
+from common.common_sm import GetRelationBasedSearchStateMachine
+from common.init import SearchInit
+from indirect_search.ism import SceneRecognition
+from indirect_search.nbv import NBVSetPointCloud
+from cropbox_search.cropbox_search_states import CropBoxGeneration
 
 class CropBoxSearchStateMachine():
 

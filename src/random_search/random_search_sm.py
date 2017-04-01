@@ -21,12 +21,12 @@ import rospy
 import smach
 import smach_ros
 
-from common_sm import GetMoveRobotSateMachine
-from states.init import SearchInit
-from states.object_detection import ObjectDetection
-from states.ism import SceneRecognition
-from states.random_search_states import GenerateRandomPose
-from states.visualize_waypoints import VisualizeWaypoints
+from common.common_sm import GetMoveRobotSateMachine
+from common.init import SearchInit
+from common.object_detection import ObjectDetection
+from indirect_search.ism import SceneRecognition
+from random_search_states import GenerateRandomPose
+from common.visualize_waypoints import VisualizeWaypoints
 
 
 class RandomSearchStateMachine():

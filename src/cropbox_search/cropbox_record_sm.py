@@ -21,50 +21,55 @@ import rospy
 import smach
 import smach_ros
 
-from states.nbv import NextBestView, NextBestViewUpdate
-from states.move import PTUPoseCorrection, MovePTU, MoveBase, FakeMoveBase
-from states.object_detection import ObjectDetection
-from states.visualize_waypoints import VisualizeWaypoints
+from common.common_sm import GetMoveRobotSateMachine
+from common.init import SearchInit
+from common.move import PTUPoseCorrection
+from indirect_search.nbv import NBVSetPointCloud, NextBestView, NextBestViewUpdate
+from cropbox_search_states import CropBoxGeneration
+from record_states import CropboxStateRecording
+from common.visualize_waypoints import VisualizeWaypoints
 
-def GetMoveRobotSateMachine():
-    sm_move = smach.Concurrence(outcomes=['succeeded',
-                                          'aborted'],
-                                default_outcome='aborted',
-                                outcome_map={'succeeded':{'MOVE_BASE':'succeeded',
-                                                          'MOVE_PTU':'succeeded'}},
-                                input_keys=['goal_robot_pose',
-                                            'goal_ptu_position'])
+class CropBoxRecordStateMachine():
 
-    with sm_move:
-        smach.Concurrence.add('MOVE_PTU',
-                              MovePTU(),
-                              remapping={'goal_ptu_position':'goal_ptu_position'})
+    sm_init = smach.StateMachine(outcomes=['succeeded',
+                                           'aborted'])
+    with sm_init:
+        smach.StateMachine.add('SEARCH_INIT',
+                               SearchInit(),
+                               transitions={'succeeded':'CROPBOX_GENERATION',
+                                            'aborted':'aborted'},
+                               remapping={'searched_object_types':'searched_object_types'})
 
-        if rospy.get_param("/scene_exploration_sm/UseFakeMoveBase") is True:
-            smach.Concurrence.add('MOVE_BASE',
-                                  FakeMoveBase(),
-                                  remapping={'goal_robot_pose':'goal_robot_pose'})
-        else:
-            smach.Concurrence.add('MOVE_BASE',
-                                  MoveBase(),
-                                  remapping={'goal_robot_pose':'goal_robot_pose'})
+        smach.StateMachine.add('CROPBOX_GENERATION',
+                               CropBoxGeneration(),
+                               transitions={'succeeded':'NBV_SET_POINT_CLOUD',
+                                            'aborted':'aborted'},
+                               remapping={'object_pointcloud':'object_pointcloud'})
 
-    return sm_move
+        smach.StateMachine.add('NBV_SET_POINT_CLOUD',
+                               NBVSetPointCloud(),
+                               transitions={'succeeded':'succeeded',
+                                            'aborted':'aborted',
+                                            'too_many_deactivated_normals':'aborted'},
+                               remapping={'object_pointcloud':'object_pointcloud'})
 
 
-def GetRelationBasedSearchStateMachine():
 
-    sm_relation_based_search = smach.StateMachine(outcomes=['found_objects',
-                                                            'aborted',
-                                                            'no_nbv_found'])
-    with sm_relation_based_search:
+    sm_cropbox_record = smach.StateMachine(outcomes=['aborted',
+                                                     'finished'])
+
+    with sm_cropbox_record:
+        smach.StateMachine.add('CROPBOX_RECORD_INIT',
+                               sm_init,
+                               transitions={'succeeded':'NBV_CALCULATION',
+                                            'aborted':'aborted'})
 
         smach.StateMachine.add('NBV_CALCULATION',
                                NextBestView(),
                                transitions={'found_next_best_view':'MOVE_ROBOT_TO_VIEW',
                                             'aborted':'aborted',
-                                            'no_nbv_found':'no_nbv_found',
-                                            'nbv_update_point_cloud':'NBV_UPDATE_POINT_CLOUD'},
+                                            'no_nbv_found':'finished',
+                                            'nbv_update_point_cloud':'MOVE_ROBOT_TO_VIEW'},
                                remapping={'goal_camera_pose':'goal_camera_pose',
                                           'goal_robot_pose':'goal_robot_pose',
                                           'goal_ptu_position':'goal_ptu_position',
@@ -85,23 +90,24 @@ def GetRelationBasedSearchStateMachine():
 
         smach.StateMachine.add('VISUALIZE_WAYPOINT',
                                VisualizeWaypoints(),
-                               transitions={'succeeded':'OBJECT_DETECTION'})
-
-        smach.StateMachine.add('OBJECT_DETECTION',
-                               ObjectDetection(),
-                               transitions={'no_objects_found':'NBV_UPDATE_POINT_CLOUD',
-                                            'found_objects':'found_objects',
-                                            'aborted':'aborted'},
-                               remapping={'searched_object_types':'searched_object_types',
-                                          'detected_objects':'detected_objects'})
+                               transitions={'succeeded':'NBV_UPDATE_POINT_CLOUD'})
 
         smach.StateMachine.add('NBV_UPDATE_POINT_CLOUD',
                                NextBestViewUpdate(),
-                               transitions={'succeeded':'NBV_CALCULATION',
+                               transitions={'succeeded':'STATE_RECORDING',
                                             'aborted':'aborted',
-                                            'no_nbv_found':'no_nbv_found'},
+                                            'no_nbv_found':'finished'},
                                remapping={'goal_camera_pose':'goal_camera_pose',
-                                          'searched_object_types':'searched_object_types'})
+                                          'searched_object_types':'searched_object_types',
+                                          'deactivated_object_normals_count':'deactivated_object_normals_count'})
 
-    return sm_relation_based_search;
+        smach.StateMachine.add('STATE_RECORDING',
+                               CropboxStateRecording(),
+                               transitions={'succeeded':'NBV_CALCULATION',
+                                            'aborted':'aborted'},
+                               remapping={'goal_camera_pose':'goal_camera_pose',
+                                         'goal_robot_pose':'goal_robot_pose',
+                                         'goal_ptu_position':'goal_ptu_position',
+                                         'deactivated_object_normals_count':'deactivated_object_normals_count'})
+
 

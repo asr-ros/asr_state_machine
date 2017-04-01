@@ -22,14 +22,14 @@ import smach
 import smach_ros
 import random
 import tf
-import states.state_acquisition as state_acquisition
+import common.state_acquisition as state_acquisition
 
 from geometry_msgs.msg import Pose, Point, Quaternion
 from nav_msgs.msg import OccupancyGrid
 from asr_flir_ptu_driver.srv import Range
 from asr_robot_model_services.srv import IsPositionAllowed
 
-from evaluation_decorators import *
+from common.evaluation_decorators import *
 
 
 class GenerateRandomPose(smach.State):
