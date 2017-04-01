@@ -35,7 +35,7 @@ from geometry_msgs.msg import (Pose, PoseWithCovariance,
 
 from common.evaluation_decorators import *
 import __builtin__
-import common.state_acquisition
+import common.state_acquisition as state_acquisition
 
 """
 States and methods for using the Next-Best-View package.
