@@ -17,7 +17,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import os
 import os.path
 
-order = ["Zustand", "ObjectSearchInit", "DirectSearchInit", "SearchInit", "SceneRecognition", "PosePrediction", "CropBoxGeneration", "NBVSetPointCloud", "GetGoalCameraPose", "NextBestView", "GenerateRandomPose", "MoveBase", "FakeMoveBase", "MovePTU", "PTUPoseCorrection", "FrustumViz", "VisualizeWaypoints", "ObjectDetection", "NextBestViewUpdate", "CropboxStateRecording", "CheckSearchFinished", "Total", "MovedDistance"]
+order = ["Zustand", "state", "ObjectSearchInit", "DirectSearchInit", "SearchInit", "SceneRecognition", "PosePrediction", "CropBoxGeneration", "NBVSetPointCloud", "GetGoalCameraPose", "NextBestView", "GenerateRandomPose", "MoveBase", "FakeMoveBase", "MovePTU", "PTUPoseCorrection", "FrustumViz", "VisualizeWaypoints", "ObjectDetection", "NextBestViewUpdate", "CropboxStateRecording", "GridInitStateRecording", "CheckSearchFinished", "Total", "MovedDistance"]
 
 toRemove = ["ObjectSearchInit", "DirectSearchInit", "SearchInit", "FrustumViz", "VisualizeWaypoints", "CheckSearchFinished", "Total"]
 
@@ -62,7 +62,7 @@ def calculateTotal(content):
   totalSum = 0.0
 
   for line in content:
-    if line.startswith("Zustand") or line.startswith("MovedDistance") or line.startswith("Total"):
+    if line.startswith("Zustand") or line.startswith("state") or line.startswith("MovedDistance") or line.startswith("Total"):
       continue
     
     eachs = line.split(',')
