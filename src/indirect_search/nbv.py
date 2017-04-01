@@ -69,6 +69,7 @@ class NBVSetPointCloud(smach.State):
             os.makedirs(__builtin__.log_dir + "/PointCloud")
 
     @log
+    @timed
     def execute(self, userdata):
         rospy.loginfo('Executing NBV_SET_POINT_CLOUD')
         if self.isInitDone == 0:
@@ -327,6 +328,7 @@ class NextBestViewUpdate(smach.State):
 
 
     @log
+    @timed
     @key_press
     def execute(self, userdata):
         rospy.loginfo('Executing NEXT_BEST_VIEW_UPDATE')
