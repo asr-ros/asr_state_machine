@@ -24,7 +24,11 @@ from asr_world_model.srv import PushFoundObject, PushFoundObjectList
 import asr_aruco_marker_recognition.srv 
 import asr_fake_object_recognition.srv
 from asr_world_model.srv import GetRecognizerName
-import asr_descriptor_surface_based_recognition.srv 
+try:
+    import asr_descriptor_surface_based_recognition.srv
+    descriptor_package_available = True
+except ImportError:
+    descriptor_package_available = False
 
 class ObjectDetectorsManager:
 
@@ -181,8 +185,12 @@ class ObjectDetectorsManager:
                         rospy.loginfo('Calling segmentable for object ' + object)
                         self.start_recognizers_standard(object,'segmentable')
                     elif str(recognizer_name) == 'descriptor':
-                        rospy.loginfo('Calling descriptor recognition for object ' + object)
-                        self.start_recognizers_descriptor(object)
+		        if descriptor_package_available:
+                            rospy.loginfo('Calling descriptor recognition for object ' + object)
+                            self.start_recognizers_descriptor(object)
+                        else:
+			    rospy.logwarn('Descriptor recognition is not available')
+			    raise RuntimeError('Trying to recognize object with asr_descriptor_surface_based_recognition which is not available')
                     else:
                         rospy.logwarn("Error using unknown recognizer name " + str(recognizer_name))
                         return 'aborted'
@@ -217,8 +225,12 @@ class ObjectDetectorsManager:
                         rospy.loginfo("Calling release segmentable for object " + object)
                         self.stop_recognizers_standard(object,'segmentable')
                     elif str(recognizer_name) == 'descriptor':
-                        rospy.loginfo("Calling release descriptor for object " + object)
-                        self.stop_recognizers_descriptor(object)
+		        if descriptor_package_available:
+                            rospy.loginfo("Calling release descriptor for object " + object)
+                            self.stop_recognizers_descriptor(object)
+                        else:
+			    rospy.logwarn('Descriptor recognition is not available')
+			    raise RuntimeError('Trying to stop recognition of asr_descriptor_surface_based_recognition which is not available')
                     else:
                         rospy.loginfo("aborted")
                         return 'aborted'
