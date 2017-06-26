@@ -18,7 +18,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import roslib
 import rospy
-import recognition_for_grasping.srv
+try:
+    import recognition_for_grasping.srv
+    rec_for_grasping_available = True
+except ImportError:
+    rec_for_grasping_available = False
 from asr_msgs.msg import AsrObject
 from asr_world_model.srv import PushFoundObject, PushFoundObjectList
 import asr_aruco_marker_recognition.srv 
@@ -179,18 +183,26 @@ class ObjectDetectorsManager:
                 else:
                     recognizer_name = recognizer_name_call(str(object)).recognizer_name
                     if str(recognizer_name) == 'textured':
-                        rospy.loginfo('Calling textured for object ' + object)
-                        self.start_recognizers_standard(object,'textured')
+                        if rec_for_grasping_available:
+                            rospy.loginfo('Calling textured for object ' + object)
+                            self.start_recognizers_standard(object,'textured')
+                        else:
+                            rospy.logwarn('Textured recognition is not available')
+                            raise RuntimeError('Trying to recognize object with recognition_for_grasping which is not available')
                     elif str(recognizer_name) == 'segmentable' :
-                        rospy.loginfo('Calling segmentable for object ' + object)
-                        self.start_recognizers_standard(object,'segmentable')
+                        if rec_for_grasping_available:
+                            rospy.loginfo('Calling segmentable for object ' + object)
+                            self.start_recognizers_standard(object,'segmentable')
+                        else:
+                            rospy.logwarn('Segmentable recognition is not available')
+                            raise RuntimeError('Trying to recognize object with recognition_for_grasping which is not available')
                     elif str(recognizer_name) == 'descriptor':
-		        if descriptor_package_available:
+                        if descriptor_package_available:
                             rospy.loginfo('Calling descriptor recognition for object ' + object)
                             self.start_recognizers_descriptor(object)
                         else:
-			    rospy.logwarn('Descriptor recognition is not available')
-			    raise RuntimeError('Trying to recognize object with asr_descriptor_surface_based_recognition which is not available')
+                            rospy.logwarn('Descriptor recognition is not available')
+                            raise RuntimeError('Trying to recognize object with asr_descriptor_surface_based_recognition which is not available')
                     else:
                         rospy.logwarn("Error using unknown recognizer name " + str(recognizer_name))
                         return 'aborted'
@@ -219,18 +231,26 @@ class ObjectDetectorsManager:
                 else:
                     recognizer_name = recognizer_name_call(str(object)).recognizer_name
                     if str(recognizer_name) == 'textured':
-                        rospy.loginfo("Calling release textured for object " + object)
-                        self.stop_recognizers_standard(object,'textured')
+                        if rec_for_grasping_available:
+                            rospy.loginfo("Calling release textured for object " + object)
+                            self.stop_recognizers_standard(object,'textured')
+                        else:
+                            rospy.logwarn('Textured recognition is not available')
+                            raise RuntimeError('Trying to stop recognition of recognition_for_grasping which is not available')
                     elif str(recognizer_name) == 'segmentable':
-                        rospy.loginfo("Calling release segmentable for object " + object)
-                        self.stop_recognizers_standard(object,'segmentable')
+                        if rec_for_grasping_available:
+                            rospy.loginfo("Calling release segmentable for object " + object)
+                            self.stop_recognizers_standard(object,'segmentable')
+                        else:
+                            rospy.logwarn('Segmentable recognition is not available')
+                            raise RuntimeError('Trying to stop recognition of recognition_for_grasping which is not available')
                     elif str(recognizer_name) == 'descriptor':
-		        if descriptor_package_available:
+                        if descriptor_package_available:
                             rospy.loginfo("Calling release descriptor for object " + object)
                             self.stop_recognizers_descriptor(object)
                         else:
-			    rospy.logwarn('Descriptor recognition is not available')
-			    raise RuntimeError('Trying to stop recognition of asr_descriptor_surface_based_recognition which is not available')
+                            rospy.logwarn('Descriptor recognition is not available')
+                            raise RuntimeError('Trying to stop recognition of asr_descriptor_surface_based_recognition which is not available')
                     else:
                         rospy.loginfo("aborted")
                         return 'aborted'

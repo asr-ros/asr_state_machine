@@ -42,7 +42,11 @@ import __builtin__ # hack for sharing log dir
 import signal
 import subprocess
 from os.path import expanduser
-from recognition_for_grasping.srv import ClearAllRecognizers as GraspingClearAllRecognizers
+try:
+    from recognition_for_grasping.srv import ClearAllRecognizers as GraspingClearAllRecognizers
+    rec_for_grasping_available = True
+except ImportError:
+    rec_for_grasping_available = False
 from asr_fake_object_recognition.srv import ClearAllRecognizers as FakeObjectClearAllRecognizers
 try:
     from asr_descriptor_surface_based_recognition.srv import ClearAllRecognizers as DescriptorSurfaceClearAllRecognizers
@@ -260,11 +264,12 @@ def shutdown_hook():
         except rospy.ServiceException, e:
             rospy.logwarn("Error calling the clear for /asr_fake_object_recognition/clear_all_recognizers service: " + str(e))
     else:
-        try:
-            release_tex_seg_recognizers = rospy.ServiceProxy('/recognition_manager/clear_all_recognizers', GraspingClearAllRecognizers)
-            release_tex_seg_recognizers("/stereo/objects")
-        except rospy.ServiceException, e:
-            rospy.logwarn("Error calling the clear for recognition_manager/clear_all_recognizers service: " + str(e))
+	if rec_for_grasping_available:
+            try:
+                release_tex_seg_recognizers = rospy.ServiceProxy('/recognition_manager/clear_all_recognizers', GraspingClearAllRecognizers)
+                release_tex_seg_recognizers("/stereo/objects")
+            except rospy.ServiceException, e:
+                rospy.logwarn("Error calling the clear for recognition_manager/clear_all_recognizers service: " + str(e))
         if descriptor_package_available:
             try:
                 release_desc_recognizers = rospy.ServiceProxy('/asr_descriptor_surface_based_recognition/clear_all_recognizers', DescriptorSurfaceClearAllRecognizers)
