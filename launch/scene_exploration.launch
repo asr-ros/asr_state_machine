@@ -7,7 +7,7 @@
         <param name="CompletePatternsPath" value="$(find asr_state_machine)/rsc/CompletePatterns_XXX.py"/>
         <param name="CropBoxRecordingPath" value="$(find asr_direct_search_manager)/rsc/cropBoxWholeRoomRecording.xml"/>
         <param name="initializedGridFilePath" value="$(find asr_direct_search_manager)/rsc/initializedGrid.xml"/>
-	<rosparam command="load" file="$(find asr_state_machine)/launch/params.yaml" />
+	<rosparam command="load" file="$(find asr_state_machine)/param/params.yaml" />
         <param name="use_sensors" value="True" />
 	<param name ="wait_for_odom_duration" value="5" />
     </node>
