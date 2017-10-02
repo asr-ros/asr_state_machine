@@ -220,10 +220,10 @@ class NextBestView(smach.State):
 
             # This is the camera pose calculated by the nbv but most certainly
             # it won't be reached due to uncertainties
-            userdata.goal_camera_pose = get_nbv_rsp.resulting_pose
+            userdata.goal_camera_pose = get_nbv_rsp.viewport.pose
 
             # objects to search in this nbv pose
-            userdata.searched_object_types = get_nbv_rsp.object_type_name_list
+            userdata.searched_object_types = get_nbv_rsp.viewport.object_type_name_list
 
             # construct goal for moving base and ptu from nbv result
             move_pose = Pose()
