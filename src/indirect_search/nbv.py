@@ -241,9 +241,7 @@ class NextBestView(smach.State):
             rospy.logdebug("PTU from nbv robot state in deg - pan: " + str(pan) + "| tilt: " + str(tilt))
             userdata.goal_ptu_position = [pan, tilt]
 
-            viewport = AsrViewport()
-            viewport.pose = get_nbv_rsp.resulting_pose
-            viewport.object_type_name_list = get_nbv_rsp.object_type_name_list
+            viewport = get_nbv_rsp.viewport
 
             if rospy.get_param("/scene_exploration_sm/filter_viewports"):
                 rospy.wait_for_service('/env/asr_world_model/filter_viewport_depending_on_already_visited_viewports')
