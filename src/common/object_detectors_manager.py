@@ -18,7 +18,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import roslib
 import rospy
-import recognition_for_grasping.srv
 from asr_msgs.msg import AsrObject
 from asr_world_model.srv import PushFoundObject, PushFoundObjectList
 import asr_aruco_marker_recognition.srv 
@@ -61,27 +60,6 @@ class ObjectDetectorsManager:
         rospy.loginfo('Marker recognition started')
         return 'succeeded'
 
-    def start_recognizers_standard(self, searched_object_types, type):
-        recognizer = None
-
-        # initialize recognition manager
-        try:
-            rospy.wait_for_service('/recognition_manager/get_recognizer',
-                                   timeout=2)
-            recognizer = rospy.ServiceProxy(
-                    '/recognition_manager/get_recognizer',
-                    recognition_for_grasping.srv.GetRecognizer)
-        except (rospy.exceptions.ROSException, rospy.ServiceException) as e:
-            rospy.logwarn("Service error with recognition manager")
-            return 'aborted'
-
-        # start the recognizers
-        # marker recognizer does not have to be started, it's looking for all
-        # object
-        recognizer(str(searched_object_types), str(type), False)
-        rospy.loginfo('Recognition_for_grasping started for ' + str(searched_object_types))
-        return 'succeeded'
-
     def stop_recognizers_descriptor(self, searched_object_types):
         release_descriptor_recognizer = None
         try:
@@ -93,20 +71,6 @@ class ObjectDetectorsManager:
             return 'aborted'
         release_descriptor_recognizer(searched_object_types)
         rospy.loginfo("Recognition of "+str(searched_object_types)+" released for descriptor_surface_based.")
-        return 'succeeded'
-
-    def stop_recognizers_standard(self, searched_object_types, type):
-        release_recognizer = None
-        try:
-            release_recognizer = rospy.ServiceProxy(
-                    '/recognition_manager/release_recognizer',
-                    recognition_for_grasping.srv.ReleaseRecognizer)
-        except rospy.ServiceException, e:
-            rospy.logwarn("Error calling the release recognizer services for recognition manager.")
-            return 'aborted'
-        # release recognizer
-        release_recognizer(str(searched_object_types), str(type), "/stereo/objects")
-        rospy.loginfo("Recognition of "+str(searched_object_types)+" released for recognition_for_grasping.")
         return 'succeeded'
 
     def stop_markers(self):
@@ -174,13 +138,7 @@ class ObjectDetectorsManager:
                         marker_started = True
                 else:
                     recognizer_name = recognizer_name_call(str(object)).recognizer_name
-                    if str(recognizer_name) == 'textured':
-                        rospy.loginfo('Calling textured for object ' + object)
-                        self.start_recognizers_standard(object,'textured')
-                    elif str(recognizer_name) == 'segmentable' :
-                        rospy.loginfo('Calling segmentable for object ' + object)
-                        self.start_recognizers_standard(object,'segmentable')
-                    elif str(recognizer_name) == 'descriptor':
+                    if str(recognizer_name) == 'descriptor':    
                         rospy.loginfo('Calling descriptor recognition for object ' + object)
                         self.start_recognizers_descriptor(object)
                     else:
@@ -210,13 +168,7 @@ class ObjectDetectorsManager:
                         marker_stopped = True
                 else:
                     recognizer_name = recognizer_name_call(str(object)).recognizer_name
-                    if str(recognizer_name) == 'textured':
-                        rospy.loginfo("Calling release textured for object " + object)
-                        self.stop_recognizers_standard(object,'textured')
-                    elif str(recognizer_name) == 'segmentable':
-                        rospy.loginfo("Calling release segmentable for object " + object)
-                        self.stop_recognizers_standard(object,'segmentable')
-                    elif str(recognizer_name) == 'descriptor':
+                    if str(recognizer_name) == 'descriptor':
                         rospy.loginfo("Calling release descriptor for object " + object)
                         self.stop_recognizers_descriptor(object)
                     else:

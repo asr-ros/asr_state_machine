@@ -22,7 +22,6 @@
   <build_depend>geometry_msgs</build_depend>
   <build_depend>visualization_msgs</build_depend>
   <build_depend>asr_msgs</build_depend>
-  <build_depend>recognition_for_grasping</build_depend>
   <build_depend>asr_aruco_marker_recognition</build_depend>
   <build_depend>asr_descriptor_surface_based_recognition</build_depend>
   <build_depend>asr_fake_object_recognition</build_depend>
@@ -45,7 +44,6 @@
   <run_depend>geometry_msgs</run_depend>
   <run_depend>visualization_msgs</run_depend>
   <run_depend>asr_msgs</run_depend>
-  <run_depend>recognition_for_grasping</run_depend>
   <run_depend>asr_aruco_marker_recognition</run_depend>
   <run_depend>asr_descriptor_surface_based_recognition</run_depend>
   <run_depend>asr_fake_object_recognition</run_depend>

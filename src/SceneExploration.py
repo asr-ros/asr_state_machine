@@ -42,7 +42,6 @@ import __builtin__ # hack for sharing log dir
 import signal
 import subprocess
 from os.path import expanduser
-from recognition_for_grasping.srv import ClearAllRecognizers as GraspingClearAllRecognizers
 from asr_fake_object_recognition.srv import ClearAllRecognizers as FakeObjectClearAllRecognizers
 from asr_descriptor_surface_based_recognition.srv import ClearAllRecognizers as DescriptorSurfaceClearAllRecognizers
 from asr_aruco_marker_recognition.srv import ReleaseRecognizer
@@ -256,11 +255,6 @@ def shutdown_hook():
         except rospy.ServiceException, e:
             rospy.logwarn("Error calling the clear for /asr_fake_object_recognition/clear_all_recognizers service: " + str(e))
     else:
-        try:
-            release_tex_seg_recognizers = rospy.ServiceProxy('/recognition_manager/clear_all_recognizers', GraspingClearAllRecognizers)
-            release_tex_seg_recognizers("/stereo/objects")
-        except rospy.ServiceException, e:
-            rospy.logwarn("Error calling the clear for recognition_manager/clear_all_recognizers service: " + str(e))
         try:
             release_desc_recognizers = rospy.ServiceProxy('/asr_descriptor_surface_based_recognition/clear_all_recognizers', DescriptorSurfaceClearAllRecognizers)
             release_desc_recognizers()
