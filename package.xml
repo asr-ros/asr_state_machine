@@ -3,10 +3,10 @@
   <name>asr_state_machine</name>
   <version>1.0.0</version>
   <description>
-    This package is used to execute different 3D-Objectsearch procedere.
-    The main search procedere is the "object search" mode, which consists of the
+    This package is used to execute different 3D-object search procedures.
+    The main search procedure is the "object search" mode, which consists of the
     "direct search" and "indirect search". The search will be executed by
-    using different packages and bring them in a state_machine together.
+    using different packages which are brought together in a state_machine.
   </description>
   <author>Allgeyer Tobias, Aumann Florian, Borella Jocelyn, Hutmacher Robin, Karrenbauer Oliver, Marek Felix, Meißner Pascal, Trautmann Jeremias, Wittenbeck Valerij</author>
   <maintainer email="asr-ros@lists.kit.edu">Meißner Pascal</maintainer>
