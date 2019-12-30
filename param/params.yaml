@@ -17,7 +17,7 @@ particlecloud : '/particlecloud'
 waypoints : '/waypoints'
 threeD_models_topic : '/room_model'
 
-#mode : 1 for direct search only, 2 for indirect search only, 3 for object search, 4 for random search, 5 for cropbox search, 6 for cropbox record, 7 for grid init record search
+#mode : 1 for direct search only, 2 for indirect search only, 3 for object search (direct and indirect search - combined), 4 for random search, 5 for cropbox search, 6 for cropbox record, 7 for grid init record search
 mode : 2
 #Use FakeMoveBase if robot should be set on target pos, instead of moving to it. This can be useful in simulation for random or cropbox search, to save time
 UseFakeMoveBase : false
