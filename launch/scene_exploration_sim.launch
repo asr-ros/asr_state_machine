@@ -1,3 +1,4 @@
+<!--Please start ASR through the start-scripts in the package asr_resources_for_active_scene_recognition.-->
 <launch>
     <env name="ROSCONSOLE_CONFIG_FILE" value="$(find asr_state_machine)/log/rosconsole.config" />
     <node name="scene_exploration_sm" pkg="asr_state_machine" type="SceneExploration.py" output="screen">
